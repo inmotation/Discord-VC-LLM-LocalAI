@@ -249,7 +249,7 @@ client.on('messageCreate', async message => {
 
   if (isInThread) {
     const threadId = message.channel.isThread() ? message.channel.id : null;
-    
+
     await message.channel.sendTyping();
     logToConsole('> Message in thread', 'info', 1);
     // Handle messages within a thread
@@ -558,7 +558,7 @@ async function sendAudioToAPI(fileName, userId, connection, channel) {
               'eighth': 8,
               'ninth': 9
             };
-        
+
             const timeValueText = query.match(/one|two|three|four|five|six|seven|eight|nine|first|second|third|fourth|fifth|sixth|seventh|eighth|ninth/g);
             if (timeValueText) {
               timerId = [converttable[timeValueText[0]]];
@@ -653,7 +653,7 @@ async function sendToLLM(transcription, userId, connection, channel) {
       });
     }
   }
-  
+
   // Add the user's message to the chat history
   messages.push({
     role: 'user',
@@ -674,7 +674,7 @@ async function sendToLLM(transcription, userId, connection, channel) {
         'Content-Type': 'application/json'
       }
     });
-    
+
     // Chat completion without streaming
     client.post('/chat/completions', {
       model: process.env.LLM,
@@ -695,7 +695,7 @@ async function sendToLLM(transcription, userId, connection, channel) {
         role: 'assistant',
         content: llmresponse
       });
-      
+
       // Update the chat history
       chatHistory[userId] = messages;
 
@@ -910,7 +910,7 @@ async function sendToPerplexity(transcription, userId, connection, channel) {
   }
 
   // System prompt not allowed on Perplexity search
-  
+
   // Add the user's message to the chat history
   messages.push({
     role: 'user',
@@ -931,7 +931,7 @@ async function sendToPerplexity(transcription, userId, connection, channel) {
         'Content-Type': 'application/json'
       }
     });
-    
+
     // Chat completion without streaming
     client.post('/chat/completions', {
       model: process.env.PERPLEXITY_MODEL,
@@ -952,7 +952,7 @@ async function sendToPerplexity(transcription, userId, connection, channel) {
         role: 'assistant',
         content: llmresponse
       });
-      
+
       // Update the chat history
       chatHistory[userId] = messages;
 
@@ -1081,7 +1081,7 @@ async function sendToTTS(text, userid, connection, channel) {
         const response = await axios.post(process.env.OPENAI_TTS_ENDPOINT + '/v1/audio/speech', {
           model: process.env.TTS_MODEL,
           input: chunk,
-          voice: process.env.TTS_VOICE,
+//          voice: process.env.TTS_VOICE,
           response_format: "mp3",
           speed: 1.0
         }, {
@@ -1135,7 +1135,7 @@ async function sendToRVC(file, userid, connection, channel) {
     const config = {
       method: 'post',
       url: process.env.RVC_ENDPOINT+'/voice2voice?model_name='+process.env.RVC_MODEL+'&index_path='+process.env.RVC_MODEL+'&f0up_key='+process.env.RVC_F0+'&f0method=rmvpe&index_rate='+process.env.RVC_INDEX_RATE+'&is_half=false&filter_radius=3&resample_sr=0&rms_mix_rate=1&protect='+process.env.RVC_PROTECT,
-      headers: { 
+      headers: {
         ...formData.getHeaders(), // Spread the headers from formData to ensure correct boundary is set
         'accept': 'application/json'
       },
@@ -1188,10 +1188,10 @@ async function playAudioQueue(connection, channel, userid) {
     if (audio) {
       // Create an audio player
       const player = createAudioPlayer();
-      
+
       // Create an audio resource from a local file
       const resource = createAudioResource(audio.file);
-      
+
       // Subscribe the connection to the player and play the resource
       connection.subscribe(player);
       player.play(resource);
