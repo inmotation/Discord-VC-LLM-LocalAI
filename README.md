@@ -1,4 +1,6 @@
-# Discord Voice Chat LLM - Slowly modifying this to get along better with LocalAI as the TTS/STT/LLM.
+# Discord Voice Chat LLM
+
+## Slowly modifying this to get along better with LocalAI as the TTS/STT/LLM.
 
 This Discord bot uses voice recognition to interact with users in a voice channel through transcription, processing with a Large Language Model (LLM), and responding with synthesized voice. The bot converts spoken audio to text, sends it to an LLM for processing, and uses Text-to-Speech (TTS) to voice the response.
 
